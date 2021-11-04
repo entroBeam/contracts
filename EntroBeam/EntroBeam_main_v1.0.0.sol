@@ -3,7 +3,7 @@
 pragma solidity ^0.8.9;
 
 /// @title EntroBeam ver 1.0.0
-/// @author Leon Wesker
+/// @author Leon Wesker, entrobeam@gmail.com, leon@entrobeam.org
 ///
 /// @notice This contract provides secure entropy in an unpredictable and unbiased.
 /// User's Entropy transactions(EntropyRegister) are aggregate as much as the value of the 'FormationNumber' variable. 
