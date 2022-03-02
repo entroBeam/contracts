@@ -29,11 +29,12 @@ contract CallEntroBeam_essential_function {
     }
 
     modifier inherit_onlyOwner() {
-        require(msg.sender == inheritOwner, "Only owner function");
+        require(msg.sender == inheritOwner, "Only inherit owner function");
         _;
     }
 
-    function Z_danger_contractSelfDestruct() external inherit_onlyOwner {
+    function Z_danger_contractSelfDestruct(uint _verificationCode) external inherit_onlyOwner {
+        require(_verificationCode == 101101, "verification Code failed");
         selfdestruct(payable(inheritOwner));
     }
 
@@ -87,11 +88,12 @@ contract CallEntroBeam {
     }
 
     modifier inherit_onlyOwner() {
-        require(msg.sender == inheritOwner, "Only owner function");
+        require(msg.sender == inheritOwner, "Only inherit owner function");
         _;
     }
 
-    function Z_danger_contractSelfDestruct() external inherit_onlyOwner {
+    function Z_danger_contractSelfDestruct(uint _verificationCode) external inherit_onlyOwner {
+        require(_verificationCode == 101101, "verification Code failed");
         selfdestruct(payable(inheritOwner));
     }
 
