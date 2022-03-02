@@ -2,6 +2,7 @@
 pragma solidity ^0.8.11;
 
 import "https://github.com/entroBeam/contracts/blob/main/EntroBeam/EntroBeam_main_v1.0.0.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 /// @title Inherit EntroBeam(EIX) ver 1.0.0 https://github.com/entroBeam
 /// @author Leon Wesker, entrobeam@gmail.com, leon@entrobeam.org
@@ -21,6 +22,34 @@ import "https://github.com/entroBeam/contracts/blob/main/EntroBeam/EntroBeam_mai
 // This contract represents the most straightforward and most intuitive way to utilize EntroBeam.
 // You can skip(No need to deploy) this contract and use the next 'CallEntroBeam' contract.
 contract CallEntroBeam_essential_function {
+    address public inheritOwner;
+
+    constructor() {
+        inheritOwner = payable(msg.sender);
+    }
+
+    modifier inherit_onlyOwner() {
+        require(msg.sender == inheritOwner, "Only owner function");
+        _;
+    }
+
+    function Z_danger_contractSelfDestruct() external inherit_onlyOwner {
+        selfdestruct(payable(inheritOwner));
+    }
+
+    /// @notice Withdraw all EIX of this contract
+    /// @param _token , 0xDF7F1af35e682c4eFAd40e97C9E370137DD471a1
+    function withdrawToken(IERC20 _token) external inherit_onlyOwner {
+        _token.transfer(msg.sender, _token.balanceOf(payable(address(this))));
+    }
+
+    function withdrawCoin(address payable _recipient, uint256 _amount)
+        external
+        inherit_onlyOwner
+    {
+        _recipient.transfer(_amount);
+    }
+
     /// @notice Address of the EntroBeam main contract. Explicitly convert the type.
     address payable EIXcontract_address =
         payable(address(0xDF7F1af35e682c4eFAd40e97C9E370137DD471a1));
@@ -51,6 +80,34 @@ contract CallEntroBeam_essential_function {
 
 // This contract extends further from 'CallEntroBeam_essential_function' to provide more useful functionality.
 contract CallEntroBeam {
+    address public inheritOwner;
+
+    constructor() {
+        inheritOwner = payable(msg.sender);
+    }
+
+    modifier inherit_onlyOwner() {
+        require(msg.sender == inheritOwner, "Only owner function");
+        _;
+    }
+
+    function Z_danger_contractSelfDestruct() external inherit_onlyOwner {
+        selfdestruct(payable(inheritOwner));
+    }
+
+    /// @notice Withdraw all EIX of this contract
+    /// @param _token , 0xDF7F1af35e682c4eFAd40e97C9E370137DD471a1
+    function withdrawToken(IERC20 _token) external inherit_onlyOwner {
+        _token.transfer(msg.sender, _token.balanceOf(payable(address(this))));
+    }
+
+    function withdrawCoin(address payable _recipient, uint256 _amount)
+        external
+        inherit_onlyOwner
+    {
+        _recipient.transfer(_amount);
+    }
+
     /// @notice Address of the EntroBeam main contract. Explicitly convert the type.
     address payable EIXcontract_address =
         payable(address(0xDF7F1af35e682c4eFAd40e97C9E370137DD471a1));
